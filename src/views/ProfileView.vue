@@ -1,14 +1,13 @@
 <template>
-  <SignIn />
+  <Profile />
 </template>
 
 <script>
-import SignIn from "@/components/SignIn.vue";
-
+import Profile from "@/components/Profile.vue";
 export default {
-  name: "SignInView",
+  name: "ProfileView",
   components: {
-    SignIn,
+    Profile,
   },
 };
 </script>

@@ -11,22 +11,42 @@
           <input type="text" v-model="pais" placeholder="País" />
         </div>
         <div class="input-group">
-          <input type="email" v-model="correo" placeholder="Correo Electrónico" />
+          <input
+            type="email"
+            v-model="correo"
+            placeholder="Correo Electrónico"
+          />
         </div>
         <div class="input-group">
           <input type="tel" v-model="telefono" placeholder="Teléfono" />
         </div>
         <div class="input-group">
-          <input type="text" v-model="mercado_financiero" placeholder="Mercado Financiero" />
+          <input
+            type="text"
+            v-model="mercado_financiero"
+            placeholder="Mercado Financiero"
+          />
         </div>
         <div class="input-group">
-          <input type="text" v-model="tipo_de_trader" placeholder="Tipo de Trader" />
+          <input
+            type="text"
+            v-model="tipo_de_trader"
+            placeholder="Tipo de Trader"
+          />
         </div>
         <div class="input-group">
-          <input type="text" v-model="nombre_usuario" placeholder="Nombre de Usuario" />
+          <input
+            type="text"
+            v-model="nombre_usuario"
+            placeholder="Nombre de Usuario"
+          />
         </div>
         <div class="input-group">
-          <input type="password" v-model="contraseña" placeholder="Contraseña" />
+          <input
+            type="password"
+            v-model="contraseña"
+            placeholder="Contraseña"
+          />
         </div>
         <div>
           <button type="submit">Registrarte</button>
@@ -53,24 +73,25 @@ export default {
       mercado_financiero: null,
       tipo_de_trader: null,
       nombre_usuario: null,
-      contraseña: null
+      contraseña: null,
     };
   },
   methods: {
     handleSubmit() {
       const body = this.$data;
-      axios.post('http://localhost:3000/auth/register', body)
-      .then((response) => {
-        if(response.data.error === false) {
-          alert(response.data.message);
-          this.$router.push('/signIn');
-        }else {
-          alert(response.data.message);
-        }
-      })
-      .catch((error) => {
-        console.error('error al llenar formulario', error);
-      })
+      axios
+        .post("http://localhost:3000/auth/register", body)
+        .then((response) => {
+          if (response.data.error === false) {
+            alert(response.data.message);
+            this.$router.push("/signIn");
+          } else {
+            alert(response.data.message);
+          }
+        })
+        .catch((error) => {
+          console.error("error al llenar formulario", error);
+        });
     },
   },
 };

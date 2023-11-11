@@ -48,7 +48,7 @@ export default {
         .then((response) => {
           response.data.error === true
             ? alert(response.data.message)
-            : alert("Bienvenido a trading bitacores");
+            : this.$router.push("/home-app");
         })
         .catch((error) => {
           console.error(error);

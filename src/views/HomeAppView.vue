@@ -1,14 +1,13 @@
 <template>
-  <SignIn />
+  <HomeApp />
 </template>
 
 <script>
-import SignIn from "@/components/SignIn.vue";
-
+import HomeApp from "@/components/HomeApp.vue";
 export default {
-  name: "SignInView",
+  name: "HomeAppView",
   components: {
-    SignIn,
+    HomeApp,
   },
 };
 </script>

@@ -1,16 +1,14 @@
 <template>
-    <RegisterUser/>  
+  <RegisterUser />
 </template>
 
 <script>
-
 import RegisterUser from "@/components/RegisterUser.vue";
 
 export default {
-    name: 'RegisterUserView',
-    components: {
-        RegisterUser
-    }
-
-}
+  name: "RegisterUserView",
+  components: {
+    RegisterUser,
+  },
+};
 </script>
