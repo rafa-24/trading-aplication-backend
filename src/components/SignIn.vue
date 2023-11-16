@@ -39,6 +39,7 @@ export default {
         username: "",
         password: "",
       },
+      token: ""
     };
   },
   methods: {
@@ -46,11 +47,16 @@ export default {
       axios
         .post("http://localhost:3000/auth/login", this.user)
         .then((response) => {
-          response.data.error === true
-            ? alert(response.data.message)
-            : this.$router.push("/home-app");
+          if (response.data.error === true) {
+            alert(response.data.message);
+          }else {
+            this.token = response.data.accessToken;
+            // guardar jwt en localStorage el token
+            localStorage.setItem('token', this.token);
+            this.$router.push("/home-app");
+          }
         })
-        .catch((error) => {
+        .catch((error) => { 
           console.error(error);
         });
     },

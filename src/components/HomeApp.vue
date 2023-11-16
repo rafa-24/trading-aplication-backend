@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h3>Hola Rafael</h3>
+    <GreetUser/>
     <p>
-      <router-link to="/profile">Perfil</router-link>
+      <router-link to="/profile">Perfil</router-link>      
     </p>
     <p>
       <router-link to="/feelings-log">Bitacora De Sentimientos</router-link>
@@ -17,8 +17,12 @@
 </template>
 
 <script>
+import GreetUser from "../components/GreetUser.vue";
 export default {
   name: "HomeApp",
+  components: {
+    GreetUser
+  }
 };
 </script>
 
