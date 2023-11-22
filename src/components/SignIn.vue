@@ -51,6 +51,7 @@ export default {
             alert(response.data.message);
           }else {
             this.token = response.data.accessToken;
+            console.log('token inicio de seesion', this.token)
             // guardar jwt en localStorage el token
             localStorage.setItem('token', this.token);
             this.$router.push("/home-app");

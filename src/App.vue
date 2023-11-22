@@ -13,6 +13,6 @@ export default {};
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: black;
-  background-color: beige;
+  /*background-color: beige;*/
 }
 </style>
