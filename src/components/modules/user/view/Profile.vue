@@ -1,18 +1,28 @@
 <template>
-  <div class="profile-container">
-    <label for="fileInput" class="profile-picture">
-      <!-- Imagen de perfil circular -->
-      <img :src="profilePicture" alt="Foto de perfil" />
-      <input
-        type="file"
-        id="fileInput"
-        style="display: none"
-        @change="uploadProfilePhoto"
-      />
-    </label>
-    <div class="profile-info">
-      <h2>{{ userName }}</h2>
-      <h2>{{ country }}</h2>
+  <div
+    class="container-fluid d-flex justify-content-center align-items-center vh-100"
+  >
+    <div class="card text-center p-4">
+      <div class="profile-container">
+        <label for="fileInput" class="profile-picture">
+          <img
+            :src="profilePicture"
+            alt="Foto de perfil"
+            class="img-fluid rounded-circle"
+            @click="triggerFileInput"
+          />
+          <input
+            type="file"
+            id="fileInput"
+            style="display: none"
+            @change="uploadProfilePhoto"
+          />
+        </label>
+        <div class="profile-info">
+          <h3>{{ userName }}</h3>
+          <h4>{{ country }}</h4>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -104,21 +114,15 @@ export default {
 
 <style>
 .profile-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
   text-align: center;
 }
 
-/* Estilos de la foto de perfil circular */
 .profile-picture {
   width: 150px;
   height: 150px;
-  border-radius: 50%;
   overflow: hidden;
   margin-bottom: 20px;
-  cursor: pointer; /* Agregar cursor apuntador al pasar sobre la imagen */
+  cursor: pointer;
 }
 
 .profile-picture img {
@@ -127,23 +131,8 @@ export default {
   object-fit: cover;
 }
 
-/* Estilos del botón y la descripción */
-.edit-button {
-  padding: 10px 20px;
-  background-color: #3498db;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.edit-button:hover {
-  background-color: #2980b9;
-}
-
-.description {
-  font-size: 16px;
-  margin-bottom: 20px;
+.profile-info h2,
+.profile-info h4 {
+  margin-bottom: 5px;
 }
 </style>

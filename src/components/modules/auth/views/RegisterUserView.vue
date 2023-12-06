@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import RegisterUser from "@/components/RegisterUser.vue";
+import RegisterUser from "@/components/modules/auth/views/RegisterUser.vue";
 
 export default {
   name: "RegisterUserView",
