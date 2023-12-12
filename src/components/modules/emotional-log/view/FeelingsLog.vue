@@ -4,11 +4,10 @@
     <button type="button" class="btn btn-primary" @click="showModal">
       + Crear una bitacora emocional
     </button>
-    <!--Modal-->
     <div class="modal" id="myModal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <form @submit.prevent="submitForm">
+          <form @submit.prevent="update ? updateEmotionalLog() : submitForm()">
             <div class="modal-header">
               <h5 class="modal-title">Bitacora Emocional</h5>
               <button
@@ -64,6 +63,13 @@
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary">Enviar</button>
+              <button
+                class="btn btn-primary"
+                v-if="update"
+                @click="updateEmotionalLog"
+              >
+                Actualizar
+              </button>
             </div>
           </form>
         </div>
@@ -72,20 +78,22 @@
     <div class="container mt-4">
       <div class="card" v-for="items in emotionalLogArr" :key="items.id">
         <div class="card-body d-flex align-items-center">
-          <div class="flex-grow-1" >
+          <div class="flex-grow-1">
             <h5 class="card-title">{{ items.estado_emocional }}</h5>
             <p class="card-text">{{ items.contenido }}</p>
           </div>
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="checkbox1" />
-            <label class="form-check-label" for="checkbox1">Checkbox</label>
-          </div>
           <div>
-            <button class="btn btn-primary mx-1" @click="actualizar">
-              Actualizar
-            </button>
-            <button class="btn btn-danger mx-1" @click="eliminar">
+            <button
+              class="btn btn-danger mx-1"
+              @click="deleteEmotionalLog(items.id)"
+            >
               Eliminar
+            </button>
+            <button
+              class="btn btn-primary mx-1"
+              @click="getDataModal(items.id)"
+            >
+              Actualizar
             </button>
           </div>
         </div>
@@ -96,7 +104,12 @@
 
 <script>
 import { Modal } from "bootstrap";
-import { createEmotionalLog, getAllEmotionalLog } from "../store/store";
+import {
+  createEmotionalLog,
+  getAllEmotionalLog,
+  deleteEmotionalLog,
+  updateEmotionalLog,
+} from "../store/store";
 export default {
   name: "FeelingsLog",
   data() {
@@ -110,12 +123,15 @@ export default {
       token: "",
       emotionalLogArr: [],
       modal: null,
+      update: false,
+      emotionalLogId: null,
     };
+  },
+  async created() {
+    await this.getAllEmotionalLog();
   },
   async mounted() {
     this.modal = new Modal(document.getElementById("myModal"));
-    // llamar a endpoint de motrar todas la bitacoras
-    await this.getAllEmotionalLog();
   },
   methods: {
     showModal() {
@@ -147,7 +163,7 @@ export default {
         } else {
           const response = await createEmotionalLog(config, data);
           alert(`${response.message}`);
-          this.emotionalLogArr.push(data);
+          await this.getAllEmotionalLog();
           this.closeModal();
           this.cleanForm(data);
         }
@@ -163,11 +179,59 @@ export default {
           },
         };
         const resp = await getAllEmotionalLog(config);
-        if(resp.length !== 0) {
-          this.emotionalLogArr = resp;                    
-        }        
+        if (resp.length !== 0) {
+          this.emotionalLogArr = resp;
+          return this.emotionalLogArr;
+        }
       } catch (error) {
         console.error("Error el la peticion", error);
+      }
+    },
+    async deleteEmotionalLog(id) {
+      try {
+        const config = {
+          headers: {
+            token_access: localStorage.getItem("token"),
+          },
+        };
+        const resp = await deleteEmotionalLog(config, id);
+        alert(`${resp.message}`);
+        await this.getAllEmotionalLog();
+      } catch (error) {
+        console.error("Error en la peticion", error);
+      }
+    },
+
+    getDataModal(id) {
+      this.emotionalLogId = id;
+      this.emotionalLogArr.forEach((emotionalLog) => {
+        if (emotionalLog.id === this.emotionalLogId) {
+          this.update = true;
+          this.showModal();
+          this.emotionalLogData.estado_emocional = emotionalLog.estado_emocional;
+          this.emotionalLogData.antes_tradear = emotionalLog.antes_tradear;
+          this.emotionalLogData.despues_tradear = emotionalLog.despues_tradear;
+          this.emotionalLogData.contenido = emotionalLog.contenido;
+        }
+      });
+    },
+    async updateEmotionalLog() {
+      try {
+        const config = {
+          headers: {
+            token_access: localStorage.getItem("token"),
+          },
+        };
+        const resp = await updateEmotionalLog(
+          config,
+          this.emotionalLogId,
+          this.emotionalLogData
+        );
+        alert(`${resp.message}`);
+        this.closeModal();
+        await this.getAllEmotionalLog();
+      } catch (error) {
+        console.log("Error en la peticion", error);
       }
     },
   },
